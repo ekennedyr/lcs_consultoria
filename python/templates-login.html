@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Login</h1>
+            <div id="login-box"></div>
+        </div>
+    </section>
+    
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+        const supabase = createClient('SEU_SUPABASE_URL', 'SEU_SUPABASE_KEY');
+        
+        async function login() {
+            const email = prompt("Digite seu e-mail:");
+            const password = prompt("Digite sua senha:");
+            
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+            
+            if (error) {
+                alert("Erro: " + error.message);
+            } else {
+                window.location.href = "/";
+            }
+        }
+        
+        document.getElementById('login-box').innerHTML = `
+            <button class="button is-primary" onclick="login()">
+                Entrar com E-mail/Senha
+            </button>
+        `;
+    </script>
+</body>
+</html>
