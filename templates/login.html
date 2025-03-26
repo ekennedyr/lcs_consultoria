@@ -1,42 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Balancetes - Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        .hero-body {
+            background-color: #f5f5f5;
+        }
+        .login-box {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title">Login</h1>
-            <div id="login-box"></div>
+    <section class="hero is-fullheight">
+        <div class="hero-body">
+            <div class="login-box">
+                <h1 class="title has-text-centered mb-5">Acesso ao Sistema</h1>
+                
+                <div class="field">
+                    <label class="label">E-mail</label>
+                    <div class="control">
+                        <input id="email" class="input" type="email" placeholder="seu@email.com">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Senha</label>
+                    <div class="control">
+                        <input id="password" class="input" type="password" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <button class="button is-primary is-fullwidth" onclick="handleLogin()">
+                        Entrar
+                    </button>
+                </div>
+
+                <div id="error-message" class="has-text-danger mt-3" style="display: none;"></div>
+            </div>
         </div>
     </section>
-    
+
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
         const supabase = createClient('SEU_SUPABASE_URL', 'SEU_SUPABASE_KEY');
-        
-        async function login() {
-            const email = prompt("Digite seu e-mail:");
-            const password = prompt("Digite sua senha:");
+
+        async function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password
             });
-            
+
             if (error) {
-                alert("Erro: " + error.message);
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('error-message').innerText = error.message;
             } else {
-                window.location.href = "/";
+                window.location.href = '/';
             }
         }
-        
-        document.getElementById('login-box').innerHTML = `
-            <button class="button is-primary" onclick="login()">
-                Entrar com E-mail/Senha
-            </button>
-        `;
     </script>
 </body>
 </html>

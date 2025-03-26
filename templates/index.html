@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="box">
+                <h1 class="title">Documentos Disponíveis</h1>
+                <div class="content">
+                    <ul>
+                        {% for doc in documentos %}
+                        <li>
+                            <a href="{{ doc.caminho_arquivo }}" class="button is-link is-outlined" download>
+                                Download - {{ doc.data_upload | date }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button onclick="window.location.href='/logout'" class="button is-danger mt-4">Sair</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
